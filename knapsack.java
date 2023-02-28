@@ -5,6 +5,7 @@ public class knapsack {
 
     private static void knapsackSort(int amount, double[] value, double[] weight, double sackCap)
     {
+        formatter(value, weight);
         double[] valueByWeight = new double[amount];
         for(int i = 0; i < amount; i++){
             valueByWeight[i] = value[i] / weight[i];
@@ -39,12 +40,29 @@ public class knapsack {
         }
         //System.out.println("\n" + Arrays.toString(valueByWeight) + "\n" + total);
     }
+    
+    private void formatter(double[] value, double[] weight)
+    {
+        for(int i = 0; i < weight.length; i++){
+            if(weight[i] <= 0){
+                shifter( value, i);
+                shifter( weight, i);
+            }
+        }
+    }
+    
+    private void shifter(double[] arr, int startIndex)
+    {
+        
+    }
+    
     private static void swap(double[] arr, int i, int j)
     {
         double temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
+    
     public static void main(String[] args) {
         
         Scanner sc = new Scanner(System.in);
