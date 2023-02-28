@@ -6,8 +6,6 @@ public class knapsack {
     private static void knapsackSort(int amount, double[] value, double[] weight, double sackCap)
     {
         formatter(value, weight);
-        //System.out.println("\n" + Arrays.toString(value));
-        //System.out.println("\n" + Arrays.toString(weight));
         double[] valueByWeight = new double[amount];
         for(int i = 0; i < amount; i++){
             valueByWeight[i] = value[i] / weight[i];
@@ -24,7 +22,7 @@ public class knapsack {
                 }
             }
             //put in bag
-            if (sackCap <= weight[i] || i == amount - 1 || Double.isNaN(valueByWeight[i+1]))
+            if (sackCap <= weight[i] || i >= amount -1 || Double.isNaN(valueByWeight[i+1]))
             {
                 if (sackCap > weight[i]) {
                     sackCap -= weight[i];
@@ -47,6 +45,19 @@ public class knapsack {
             }
             sackCap -= weight[i];
             total += value[i];
+            if(i >= amount - 2){
+                sackCap -= weight[i+1];
+                total += value[i+1];
+                System.out.printf("\n%-15s %-15s %-15s %-15s\n", "Order", "Value", "Weight", "Quantity");
+                for (int n = 0; n < i+1 ; n++)
+                {
+                    System.out.printf("%-15d %-15.2f %-15.2f %-15s\n", n+1, value[n], weight[n], "1");
+                }
+                System.out.printf("%-15d %-15.2f %-15.2f %-15s\n", i+2, value[i+1], weight[i+1], sackCap + "/" + weight[i+1]);
+                System.out.println("Total value is " + total);
+                if (sackCap > 0) System.out.println("There is space left equal to: " + sackCap);
+                return;
+            }
         }
         System.out.println("\n" + Arrays.toString(valueByWeight) + "\n" + total + " something went wrong...");
     }
